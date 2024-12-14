@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head> 
+<meta charset="utf-8"> 
+<title>泥嚎</title> 
+</head>
+<body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打开相同网址的新页面</title>
+    <script>
+        function openSamePageInNewTab() {
+            window.open(location.href, '_blank');
+        }
+    </script>
+</head>
+<body>    
+    <button onclick="openSamePageInNewTab()">在新标签页中打开当前页面</button>
+<form action="">
+可以在这里随便打字捏: <input type="text" name="" value=""><br>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>复选框未选中状态</title>
+    <script>
+        window.onload = function() {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            var displayUnchecked = document.getElementById('unchecked-display');
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    var uncheckedItems = [];
+                    checkboxes.forEach(function(cb) {
+                        if (!cb.checked) {
+                            uncheckedItems.push(cb.name);
+                        }
+                    });
+
+                    if (uncheckedItems.length > 0) {
+                        displayUnchecked.textContent = '未选中项目数量: ' + uncheckedItems.length + ', 名字: ' + uncheckedItems.join(', ');
+                    } else {
+                        displayUnchecked.textContent = '齐了！！';
+                    }
+                });
+            });
+        };
+    </script>
+</head>
+<body>
+       <p id="unchecked-display">未选中项目数量: 37</p>
+<p style="font-size:200%"><input type="checkbox" name="[1]穆昊麟" value="1">[1]穆昊麟
+<input type="checkbox" name="[2]潘苏博" value="2">[2]潘苏博
+<input type="checkbox" name="[3]毕爽爽" value="3">[3]毕爽爽
+<input type="checkbox" name="[4]洪扬" value="4">[4]洪扬
+<input type="checkbox" name="[6]郭涛" value="6">[6]郭涛</p>
+<p style="font-size:200%"><input type="checkbox" name="[7]王天麒" value="7">[7]王天麒
+<input type="checkbox" name="[8]胡展鹏" value="8">[8]胡展鹏
+<input type="checkbox" name="[9]宋京政" value="9">[9]宋京政
+<input type="checkbox" name="[10]邹林波" value="10">[10]邹林波
+<input type="checkbox" name="[12]刘宏宇" value="12">[12]刘宏宇<br></p>
+<p style="font-size:200%"><input type="checkbox" name="[13]赵锐" value="13">[13]赵锐
+<input type="checkbox" name="[14]孙传锦" value="14">[14]孙传锦
+<input type="checkbox" name="[15]张圣泽" value="15">[15]张圣泽
+<input type="checkbox" name="[16]刘靖宇" value="16">[16]刘靖宇
+<input type="checkbox" name="[17]张子衡" value="17">[17]张子衡<br></p>
+<p style="font-size:200%"><input type="checkbox" name="[18]林飞宇" value="18">[18]林飞宇
+<input type="checkbox" name="[19]王洪翔" value="19">[19]王洪翔
+<input type="checkbox" name="[20]王子宸" value="20">[20]王子宸
+<input type="checkbox" name="[21]马天腾" value="21">[21]马天腾
+<input type="checkbox" name="[22]朱克臻" value="22">[22]朱克臻<br></p>
+<p style="font-size:200%"><input type="checkbox" name="[23]张恒杰" value="23">[23]张恒杰
+<input type="checkbox" name="[24]侯召强" value="24">[24]侯召强
+<input type="checkbox" name="[25]马诗鉴" value="25">[25]马诗鉴
+<input type="checkbox" name="[26]王子豪" value="26">[26]王子豪
+<input type="checkbox" name="[27]陈新儒" value="27">[27]陈新儒<br></p>
+<p style="font-size:200%"><input type="checkbox" name="[28]刘诚明" value="28">[28]刘诚明
+<input type="checkbox" name="[29]秦昌旭" value="29">[29]秦昌旭
+<input type="checkbox" name="[30]程浩然" value="30">[30]程浩然
+<input type="checkbox" name="[31]王思旭" value="31">[31]王思旭
+<input type="checkbox" name="[32]孙麒麟" value="32">[32]孙麒麟<br></p>
+<p style="font-size:200%"><input type="checkbox" name="[33]王福川" value="33">[33]王福川
+<input type="checkbox" name="[35]徐张豪" value="35">[35]徐张豪<br></p>
+<p style="font-size:200%"><input type="checkbox" name="[36]司科迪" value="36">[36]司科迪
+<input type="checkbox" name="[37]陈禹静" value="37">[37]陈禹静
+<input type="checkbox" name="[38]罗灵" value="38">[38]罗灵
+<input type="checkbox" name="[39]葛子彤" value="39">[39]葛子彤
+<input type="checkbox" name="[40]章涵冰" value="40">[40]章涵冰
+</form>
+
+</body>
+</html>
