@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作业记录管理系统</title>
+    <style>
+        div {
+            border: 2px dashed #ccc;
+            width: 320px;
+            text-align: center;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .text {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        input[type="button"] {
+            padding: 5px 10px;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>新增记录</h2>
+        <label for="workname">作业名称：</label>
+        <input type="text" id="workname" name="workname" class="text"/>
+        <br/>
+        <label for="note">记录：</label>
+        <input type="text" id="note" name="note" class="text"/>
+        <br/>
+        <input type="button" onclick="save()" value="新增记录"/>
+        <hr/>
+        <h2>查找记录</h2>
+        <label for="search_workname">输入作业名称：</label>
+        <input type="text" id="search_workname" name="search_workname" class="text"/>
+        <input type="button" onclick="findOne()" value="查找记录"/>
+        <p id="find_result" class="result"></p>
+        <hr/>
+        <h2>删除记录</h2>
+        <label for="delete_workname">输入作业名称：</label>
+        <input type="text" id="delete_workname" name="delete_workname" class="text"/>
+        <input type="button" onclick="deleteOne()" value="删除记录"/>
+        <p id="delete_result" class="result"></p>
+    </div>
+
+    <script>
+        // 初始化时加载所有记录并显示
+        window.onload = function() {
+            const records = JSON.parse(localStorage.getItem('records')) || {};
+            const recordList = document.createElement('ul');
+            for (const workname in records) {
+                const li = document.createElement('li');
+                li.innerText = `作业名称: ${workname} - 记录: ${records[workname]}`;
+                recordList.appendChild(li);
+            }
+            document.body.appendChild(recordList);
+        }
+
+        // 保存记录到localStorage
+        function save() {
+            const workname = document.getElementById('workname').value;
+            const note = document.getElementById('note').value;
+
+            if (workname === "" || note === "") {
+                alert("作业名称和记录都不能为空！");
+                return;
+            }
+
+            const records = JSON.parse(localStorage.getItem('records')) || {};
+            records[workname] = note;
+            localStorage.setItem('records', JSON.stringify(records));
+
+            alert("记录已保存！");
+            document.getElementById('workname').value = "";
+            document.getElementById('note').value = "";
+
+            // 更新记录列表
+            updateRecordList();
+        }
+
+        // 从localStorage查找记录
+        function findOne() {
+            const searchWorkname = document.getElementById('search_workname').value;
+            const records = JSON.parse(localStorage.getItem('records')) || {};
+
+            const result = records[searchWorkname];
+            if (result) {
+                document.getElementById('find_result').innerText = `作业名称: ${searchWorkname}\n记录: ${result}`;
+            } else {
+                document.getElementById('find_result').innerText = "未找到相关记录。";
+            }
+        }
+
+        // 从localStorage删除记录
+        function deleteOne() {
+            const deleteWorkname = document.getElementById('delete_workname').value;
+            const records = JSON.parse(localStorage.getItem('records')) || {};
+
+            if (records[deleteWorkname]) {
+                delete records[deleteWorkname];
+                localStorage.setItem('records', JSON.stringify(records));
+                document.getElementById('delete_result').innerText = `作业名称: ${deleteWorkname} 的记录已删除。`;
+            } else {
+                document.getElementById('delete_result').innerText = "未找到相关记录，无法删除。";
+            }
+
+            // 更新记录列表
+            updateRecordList();
+        }
+
+        // 更新记录列表
+        function updateRecordList() {
+            const records = JSON.parse(localStorage.getItem('records')) || {};
+            const recordList = document.querySelector('ul');
+            if (recordList) {
+                recordList.innerHTML = ''; // 清空现有列表
+            } else {
+                const recordList = document.createElement('ul');
+                document.body.appendChild(recordList);
+            }
+
+            for (const workname in records) {
+                const li = document.createElement('li');
+                li.innerText = `作业名称: ${workname} - 记录: ${records[workname]}`;
+                document.querySelector('ul').appendChild(li);
+            }
+        }
+    </script>
+</body>
+</html>
