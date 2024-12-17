@@ -24,10 +24,10 @@
             background-color: #0056b3;
         }
         button#select-all, button#deselect-all {
-            background-color: #28a745; /* 使用绿色背景 */
+            background-color: #28a745;
         }
         button#select-all:hover, button#deselect-all:hover {
-            background-color: #218838; /* 鼠标悬停时更深的绿色 */
+            background-color: #218838;
         }
         form {
             background-color: white;
@@ -114,14 +114,14 @@
 <body>
     <form action="">
         <p>
-            <button onclick="openSamePageInNewTab()">在新标签页中打开当前页面</button>
-            <button onclick="window.open('https://sesarja.github.io/haibo/new/%E8%AE%B0%E5%BD%95.html', '_blank')">在新标签页中打开作业记录管理系统</button>
+            <button type="button" onclick="openSamePageInNewTab()">在新标签页中打开当前页面</button>
+            <button type="button" onclick="window.open('https://sesarja.github.io/haibo/new/%E8%AE%B0%E5%BD%95.html', '_blank')">在新标签页中打开作业记录管理系统</button>
         </p>
         <iframe src="https://sesarja.github.io/haibo/new/%E8%AE%B0%E5%BD%95.html" name="iframe_a" width="100%" height="400px" frameborder="0"></iframe></br>
         <label>可以在这里随便打字捏: <input type="text" name="" value=""></label><br>
         <p>
-            <button id="select-all" onclick="selectAllCheckboxes()">一键全选</button>
-            <button id="deselect-all" onclick="deselectAllCheckboxes()">一键取消选定</button>
+            <button id="select-all" type="button" onclick="selectAllCheckboxes()">一键全选</button>
+            <button id="deselect-all" type="button" onclick="deselectAllCheckboxes()">一键取消选定</button>
         </p>
         <p id="unchecked-display">未选中项目数量: 37, 名字: [1]穆昊麟, [2]潘苏博, [3]毕爽爽, [4]洪扬, [6]郭涛, [7]王天麒, [8]胡展鹏, [9]宋京政, [10]邹林波, [12]刘宏宇, [13]赵锐, [14]孙传锦, [15]张圣泽, [16]刘靖宇, [17]张子衡, [18]林飞宇, [19]王洪翔, [20]王子宸, [21]马天腾, [22]朱克臻, [23]张恒杰, [24]侯召强, [25]马诗鉴, [26]王子豪, [27]陈新儒, [28]刘诚明, [29]秦昌旭, [30]程浩然, [31]王思旭, [32]孙麒麟, [33]王福川, [35]徐张豪, [36]司科迪, [37]陈禹静, [38]罗灵, [39]葛子彤, [40]章涵冰</p>
         <ul>
