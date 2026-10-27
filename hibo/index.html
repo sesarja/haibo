@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>人，你好。</title>
+<style>
+  :root {
+    --bg: #faf8f5; --card: #ffffff; --text: #2b2b2b;
+    --muted: #9a9a9a; --line: #ebe6df; --accent: #b8865b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #16161a; --card: #1d1d22; --text: #e6e4e1;
+      --muted: #7a7a80; --line: #2b2b31; --accent: #c99b6e;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 64px 20px 80px;
+    background: var(--bg); color: var(--text);
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", system-ui, sans-serif;
+    font-size: 16px; line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 660px; margin: 0 auto; }
+  header { margin-bottom: 48px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+  header h1 { margin: 0 0 6px; font-size: 26px; font-weight: 600; letter-spacing: .02em; }
+  header p { margin: 0; color: var(--muted); font-size: 14px; letter-spacing: .05em; }
+  article {
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 12px; padding: 28px 30px; margin-bottom: 20px;
+    transition: transform .25s ease, box-shadow .25s ease;
+  }
+  article:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px -12px rgba(0,0,0,.18);
+  }
+  .meta {
+    display: flex; align-items: baseline; gap: 12px;
+    margin-bottom: 14px; font-size: 12.5px; color: var(--muted);
+    letter-spacing: .06em; font-variant-numeric: tabular-nums;
+  }
+  .meta .date { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  .meta .title { font-size: 15px; font-weight: 600; color: var(--accent); }
+  .body { margin: 0; white-space: pre-wrap; word-break: break-word; }
+  .body p { margin: 0 0 1em; }
+  .body p:last-child { margin-bottom: 0; }
+  footer {
+    margin-top: 48px; padding-top: 24px;
+    border-top: 1px solid var(--line); text-align: center;
+    font-size: 13px; color: var(--muted); letter-spacing: .08em;
+  }
+  .empty { color: var(--muted); text-align: center; padding: 60px 0; }
+  @media (max-width: 520px) {
+    body { padding: 40px 16px 60px; }
+    article { padding: 22px 20px; border-radius: 10px; }
+    header h1 { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>海波碎碎念</h1>
+  </header>
+
+  <main id="feed"><p class="empty">加载中…</p></main>
+
+  <footer>共 <span id="count">0</span> 条</footer>
+</div>
+
+<script>
+const feed = document.getElementById("feed");
+const countEl = document.getElementById("count");
+
+function esc(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+  }[c]));
+}
+
+fetch("data.json?v=" + Date.now())
+  .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+  .then(posts => {
+    posts.sort((a, b) => (a.date < b.date ? 1 : -1));
+    feed.innerHTML = "";
+    if (!posts.length) {
+      feed.innerHTML = '<p class="empty">还没有内容</p>';
+    }
+    for (const post of posts) {
+      const el = document.createElement("article");
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+      meta.innerHTML = `<span class="date">${esc(post.date || "").replace(/-/g, ".")}</span>` +
+        (post.title ? `<span class="title">${esc(post.title)}</span>` : "");
+
+      const body = document.createElement("div");
+      body.className = "body";
+      body.innerHTML = String(post.text || "")
+        .split(/\n{2,}/)
+        .map(seg => `<p>${esc(seg).replace(/\n/g, "<br>")}</p>`)
+        .join("");
+
+      el.append(meta, body);
+      feed.appendChild(el);
+    }
+    countEl.textContent = posts.length;
+  })
+  .catch(err => {
+    feed.innerHTML = '<p class="empty">加载失败：' + esc(err.message) + '</p>';
+  });
+</script>
+</body>
+</html>
